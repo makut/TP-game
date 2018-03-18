@@ -13,7 +13,31 @@ Archer::Archer(const std::shared_ptr<const Archer> &other):
 Doctor::Doctor(const std::shared_ptr<const Doctor> &other):
     Unit(other), heal_(other->heal_) {}
 
+Unit::Unit(Health health, const Armor &armor):
+    health_(health), armor_(armor) {}
+
+Warrior::Warrior(Health health, const Armor &armor, const Sword &sword):
+    Unit(health, armor), sword_(sword) {}
+
+Archer::Archer(Health health, const Armor &armor, const Bow &bow):
+    Unit(health, armor), bow_(bow) {}
+
+Doctor::Doctor(Health health, const Armor &armor, const Healing &heal):
+    Unit(health, armor), heal_(heal) {}
+
+std::shared_ptr<Unit> Warrior::clone() const
+{
+    return std::shared_ptr<Unit>(NULL);
+}
+
+std::shared_ptr<Unit> Archer::clone() const
+{
+    return std::shared_ptr<Unit>(NULL);
+}
+
+std::shared_ptr<Unit> Doctor::clone() const
+{
+    return std::shared_ptr<Unit>(NULL);
+}
+
 Unit::~Unit(){}
-Warrior::~Warrior(){}
-Archer::~Archer(){}
-Doctor::~Doctor(){}
