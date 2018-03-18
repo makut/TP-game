@@ -1,6 +1,9 @@
 # pragma once
 # include "Game.h"
 
+class OrcBuilder;
+class HumanBuilder;
+
 class AbstractUnit
 {
 public:
@@ -21,6 +24,7 @@ public:
     ~Orc() = default;
     enum class Color {GREEN, GRAY, RED, WHITE};
     enum class Wool {LONG, MEDIUM, SHORT};
+    friend OrcBuilder;
 private:
     Orc(Size, Color, Wool);
     Color color_;
@@ -35,6 +39,7 @@ public:
     ~Human() = default;
     enum class Skin {BLACK, WHITE, BROWN};
     enum class Hair {WHITE, BLACK, BROWN};
+    friend HumanBuilder;
 private:
     Human(Size, Skin, Hair);
     Skin skin_;
