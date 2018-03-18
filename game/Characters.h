@@ -6,47 +6,47 @@
 class OrcWarrior : public Orc, public Warrior
 {
 public:
-    explicit OrcWarrior(std::shared_ptr<Orc>);
+    OrcWarrior(const std::shared_ptr<const Orc>&, const std::shared_ptr<const Warrior>&);
     ~OrcWarrior() = default;
-private:
+    virtual std::shared_ptr<Unit> clone() const;
 };
 
 class OrcArcher : public Orc, public Archer
 {
 public:
-    explicit OrcArcher(std::shared_ptr<Orc>);
+    OrcArcher(const std::shared_ptr<const Orc>&, const std::shared_ptr<const Archer>&);
     ~OrcArcher() = default;
-private:
+    virtual std::shared_ptr<Unit> clone() const;
 };
 
 class OrcDoctor : public Orc, public Doctor
 {
 public:
-    explicit OrcDoctor(std::shared_ptr<Orc>);
+    OrcDoctor(const std::shared_ptr<const Orc>&, const std::shared_ptr<const Doctor>&);
     ~OrcDoctor() = default;
-private:
+    virtual std::shared_ptr<Unit> clone() const;
 };
 
 class HumanWarrior : public Human, public Warrior
 {
 public:
-    explicit HumanWarrior(std::shared_ptr<Human>);
+    HumanWarrior(const std::shared_ptr<const Human>&, const std::shared_ptr<const Warrior>&);
     ~HumanWarrior() = default;
-private:
+    virtual std::shared_ptr<Unit> clone() const;
 };
 
 class HumanArcher : public Human, public Archer
 {
 public:
-    explicit HumanArcher(std::shared_ptr<Human>);
+    explicit HumanArcher(const std::shared_ptr<const Human>&, const std::shared_ptr<const Archer>&);
     ~HumanArcher() = default;
-private:
+    virtual std::shared_ptr<Unit> clone() const;
 };
 
 class HumanDoctor : public Human, public Doctor
 {
 public:
-    explicit HumanDoctor(std::shared_ptr<Human>);
+    explicit HumanDoctor(const std::shared_ptr<const Human>&, const std::shared_ptr<const Doctor>&);
     ~HumanDoctor() = default;
-private:
+    virtual std::shared_ptr<Unit> clone() const;
 };

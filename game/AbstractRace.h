@@ -8,7 +8,7 @@ public:
     enum class Size {BIG, MEDIUM, SMALL};
 protected:
     AbstractUnit(Size);
-    explicit AbstractUnit(const std::shared_ptr<AbstractUnit>&);
+    explicit AbstractUnit(const std::shared_ptr<const AbstractUnit>&);
 private:
     Size size_;
 };
@@ -17,7 +17,7 @@ class Orc : public AbstractUnit
 {
 public:
     Orc();
-    explicit Orc(const std::shared_ptr<Orc>&);
+    explicit Orc(const std::shared_ptr<const Orc>&);
     ~Orc() = default;
     enum class Color {GREEN, GRAY, RED, WHITE};
     enum class Wool {LONG, MEDIUM, SHORT};
@@ -31,7 +31,7 @@ class Human : public AbstractUnit
 {
 public:
     Human();
-    explicit Human(const std::shared_ptr<Human>&);
+    explicit Human(const std::shared_ptr<const Human>&);
     ~Human() = default;
     enum class Skin {BLACK, WHITE, BROWN};
     enum class Hair {WHITE, BLACK, BROWN};
