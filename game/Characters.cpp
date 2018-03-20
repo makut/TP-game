@@ -38,30 +38,48 @@ HumanDoctor::HumanDoctor(const std::shared_ptr<AbstractUnit> &other_hum, const s
 
 std::shared_ptr<Unit> OrcWarrior::clone() const
 {
-    return std::shared_ptr<Unit>(new OrcWarrior(std::shared_ptr<const Orc>(this), std::shared_ptr<const Warrior>(this)));
+    std::shared_ptr<const OrcWarrior> shared_this = shared_from_this();
+    std::shared_ptr<const Orc> orc_prototype(std::dynamic_pointer_cast<const Orc>(shared_this));
+    std::shared_ptr<const Warrior> war_prototype(std::dynamic_pointer_cast<const Warrior>(shared_this));
+    return std::shared_ptr<Unit>(new OrcWarrior(orc_prototype, war_prototype));
 }
 
 std::shared_ptr<Unit> OrcArcher::clone() const
 {
-    return std::shared_ptr<Unit>(new OrcArcher(std::shared_ptr<const Orc>(this), std::shared_ptr<const Archer>(this)));
+    std::shared_ptr<const OrcArcher> shared_this = shared_from_this();
+    std::shared_ptr<const Orc> orc_prototype(std::dynamic_pointer_cast<const Orc>(shared_this));
+    std::shared_ptr<const Archer> arch_prototype(std::dynamic_pointer_cast<const Archer>(shared_this));
+    return std::shared_ptr<Unit>(new OrcArcher(orc_prototype, arch_prototype));
 }
 
 std::shared_ptr<Unit> OrcDoctor::clone() const
 {
-    return std::shared_ptr<Unit>(new OrcDoctor(std::shared_ptr<const Orc>(this), std::shared_ptr<const Doctor>(this)));
+    std::shared_ptr<const OrcDoctor> shared_this = shared_from_this();
+    std::shared_ptr<const Orc> orc_prototype(std::dynamic_pointer_cast<const Orc>(shared_this));
+    std::shared_ptr<const Doctor> doc_prototype(std::dynamic_pointer_cast<const Doctor>(shared_this));
+    return std::shared_ptr<Unit>(new OrcDoctor(orc_prototype, doc_prototype));
 }
 
 std::shared_ptr<Unit> HumanWarrior::clone() const
 {
-    return std::shared_ptr<Unit>(new HumanWarrior(std::shared_ptr<const Human>(this), std::shared_ptr<const Warrior>(this)));
+    std::shared_ptr<const HumanWarrior> shared_this = shared_from_this();
+    std::shared_ptr<const Human> hum_prototype(std::dynamic_pointer_cast<const Human>(shared_this));
+    std::shared_ptr<const Warrior> war_prototype(std::dynamic_pointer_cast<const Warrior>(shared_this));
+    return std::shared_ptr<Unit>(new HumanWarrior(hum_prototype, war_prototype));
 }
 
 std::shared_ptr<Unit> HumanArcher::clone() const
 {
-    return std::shared_ptr<Unit>(new HumanArcher(std::shared_ptr<const Human>(this), std::shared_ptr<const Archer>(this)));
+    std::shared_ptr<const HumanArcher> shared_this = shared_from_this();
+    std::shared_ptr<const Human> hum_prototype(std::dynamic_pointer_cast<const Human>(shared_this));
+    std::shared_ptr<const Archer> arch_prototype(std::dynamic_pointer_cast<const Archer>(shared_this));
+    return std::shared_ptr<Unit>(new HumanArcher(hum_prototype, arch_prototype));
 }
 
 std::shared_ptr<Unit> HumanDoctor::clone() const
 {
-    return std::shared_ptr<Unit>(new HumanDoctor(std::shared_ptr<const Human>(this), std::shared_ptr<const Doctor>(this)));
+    std::shared_ptr<const HumanDoctor> shared_this = shared_from_this();
+    std::shared_ptr<const Human> hum_prototype(std::dynamic_pointer_cast<const Human>(shared_this));
+    std::shared_ptr<const Doctor> doc_prototype(std::dynamic_pointer_cast<const Doctor>(shared_this));
+    return std::shared_ptr<Unit>(new HumanDoctor(hum_prototype, doc_prototype));
 }

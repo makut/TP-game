@@ -1,3 +1,4 @@
+# include <iostream>
 # include "game/Factory.h"
 
 TEST(Building, OrcWarrior)
@@ -10,16 +11,18 @@ TEST(Building, OrcWarrior)
     ob.setSize(Orc::Size::BIG);
     ob.setColor(Orc::Color::WHITE);
     ob.setWool(Orc::Wool::LONG);
-    OrcFactory of(ob.getResult());
-    std::shared_ptr<Unit> result = of.getWarrior(wb.getResult());
+    std::shared_ptr<AbstractFactory> of(new OrcFactory(ob.getResult()));
+    std::shared_ptr<Unit> result = of->getWarrior(wb.getResult());
+    std::shared_ptr<Unit> result_copy = result->clone();
 }
 
 TEST(Building, OrcArcher)
 {
     ArcherBuilder ab;
     OrcBuilder ob;
-    OrcFactory of(ob.getResult());
-    std::shared_ptr<Unit> result = of.getArcher(ab.getResult());
+    std::shared_ptr<AbstractFactory> of(new OrcFactory(ob.getResult()));
+    std::shared_ptr<Unit> result = of->getArcher(ab.getResult());
+    std::shared_ptr<Unit> result_copy = result->clone();
 }
 
 TEST(Building, OrcDoctor)
@@ -32,8 +35,9 @@ TEST(Building, OrcDoctor)
     ob.setSize(Orc::Size::MEDIUM);
     ob.setColor(Orc::Color::WHITE);
     ob.setWool(Orc::Wool::SHORT);
-    OrcFactory of(ob.getResult());
-    std::shared_ptr<Unit> result = of.getDoctor(db.getResult());
+    std::shared_ptr<AbstractFactory> of(new OrcFactory(ob.getResult()));
+    std::shared_ptr<Unit> result = of->getDoctor(db.getResult());
+    std::shared_ptr<Unit> result_copy = result->clone();
 }
 
 TEST(Building, HumanWarrior)
@@ -45,16 +49,18 @@ TEST(Building, HumanWarrior)
     wb.setSword(Sword(1));
     hb.setSize(Human::Size::BIG);
     hb.setHair(Human::Hair::BROWN);
-    HumanFactory hf(hb.getResult());
-    std::shared_ptr<Unit> result = hf.getWarrior(wb.getResult());
+    std::shared_ptr<AbstractFactory> hf(new HumanFactory(hb.getResult()));
+    std::shared_ptr<Unit> result = hf->getWarrior(wb.getResult());
+    std::shared_ptr<Unit> result_copy = result->clone();
 }
 
 TEST(Building, HumanArcher)
 {
     ArcherBuilder ab;
     HumanBuilder hb;
-    HumanFactory hf(hb.getResult());
-    std::shared_ptr<Unit> result = hf.getArcher(ab.getResult());
+    std::shared_ptr<AbstractFactory> hf(new HumanFactory(hb.getResult()));
+    std::shared_ptr<Unit> result = hf->getArcher(ab.getResult());
+    std::shared_ptr<Unit> result_copy = result->clone();
 }
 
 TEST(Building, HumanDoctor)
@@ -64,6 +70,7 @@ TEST(Building, HumanDoctor)
     hb.setSize(Human::Size::BIG);
     hb.setSkin(Human::Skin::BLACK);
     hb.setHair(Human::Hair::WHITE);
-    HumanFactory hf(hb.getResult());
-    std::shared_ptr<Unit> result = hf.getDoctor(db.getResult());
+    std::shared_ptr<AbstractFactory> hf(new HumanFactory(hb.getResult()));
+    std::shared_ptr<Unit> result = hf->getDoctor(db.getResult());
+    std::shared_ptr<Unit> result_copy = result->clone();
 }

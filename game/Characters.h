@@ -3,7 +3,7 @@
 # include "Unit.h"
 # include "AbstractRace.h"
 
-class OrcWarrior : public Orc, public Warrior
+class OrcWarrior : public Orc, public Warrior, public std::enable_shared_from_this<OrcWarrior>
 {
 public:
     OrcWarrior(const std::shared_ptr<const Orc>&, const std::shared_ptr<const Warrior>&);
@@ -12,7 +12,7 @@ public:
     virtual std::shared_ptr<Unit> clone() const;
 };
 
-class OrcArcher : public Orc, public Archer
+class OrcArcher : public Orc, public Archer, public std::enable_shared_from_this<OrcArcher>
 {
 public:
     OrcArcher(const std::shared_ptr<const Orc>&, const std::shared_ptr<const Archer>&);
@@ -21,7 +21,7 @@ public:
     virtual std::shared_ptr<Unit> clone() const;
 };
 
-class OrcDoctor : public Orc, public Doctor
+class OrcDoctor : public Orc, public Doctor, public std::enable_shared_from_this<OrcDoctor>
 {
 public:
     OrcDoctor(const std::shared_ptr<const Orc>&, const std::shared_ptr<const Doctor>&);
@@ -30,7 +30,7 @@ public:
     virtual std::shared_ptr<Unit> clone() const;
 };
 
-class HumanWarrior : public Human, public Warrior
+class HumanWarrior : public Human, public Warrior, public std::enable_shared_from_this<HumanWarrior>
 {
 public:
     HumanWarrior(const std::shared_ptr<const Human>&, const std::shared_ptr<const Warrior>&);
@@ -39,7 +39,7 @@ public:
     virtual std::shared_ptr<Unit> clone() const;
 };
 
-class HumanArcher : public Human, public Archer
+class HumanArcher : public Human, public Archer, public std::enable_shared_from_this<HumanArcher>
 {
 public:
     HumanArcher(const std::shared_ptr<const Human>&, const std::shared_ptr<const Archer>&);
@@ -48,7 +48,7 @@ public:
     virtual std::shared_ptr<Unit> clone() const;
 };
 
-class HumanDoctor : public Human, public Doctor
+class HumanDoctor : public Human, public Doctor, public std::enable_shared_from_this<HumanDoctor>
 {
 public:
     HumanDoctor(const std::shared_ptr<const Human>&, const std::shared_ptr<const Doctor>&);
