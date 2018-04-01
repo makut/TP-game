@@ -1,5 +1,5 @@
 # pragma once
-# include "Game.h"
+# include <memory>
 # include "Unit.h"
 # include "AbstractRace.h"
 

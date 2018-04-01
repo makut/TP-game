@@ -6,7 +6,7 @@ if("${DEBUG}" STREQUAL "ON")
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(SOURCE_FILES game/Game.h game/Objects.h game/Objects.h game/Objects.cpp game/Unit.h game/Unit.cpp 
+set(SOURCE_FILES game/Objects.h game/Objects.h game/Objects.cpp game/Unit.h game/Unit.cpp 
     game/RankBuilder.h game/RankBuilder.cpp game/AbstractRace.h game/AbstractRace.cpp
     game/AbstractRaceBuilder.h game/AbstractRaceBuilder.cpp game/Characters.h game/Characters.cpp
     game/Factory.h game/Factory.cpp)
