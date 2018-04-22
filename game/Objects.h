@@ -9,6 +9,7 @@ class Armor
 public:
     explicit Armor(Health = DEFAULT_BALANCE);
     Health beat(Health);
+    long long getPower() const;
 
     static const Health DEFAULT_BALANCE;
 private:
@@ -21,6 +22,8 @@ protected:
     Weapon(Health, Coordinate);
     Health getHealth() const;
     Coordinate getDistance() const;
+public:
+    long long getPower() const;
 private:
     Health dam_;
     Coordinate dist_;
@@ -50,6 +53,7 @@ public:
     explicit Healing(Coordinate distance = DEFAULT_DISTANCE, Health heal = DEFAULT_HEAL);
     Health getHeal() const;
     Coordinate getDistance() const;
+    long long getPower() const;
 
     static const Health DEFAULT_HEAL;
     static const Coordinate DEFAULT_DISTANCE;

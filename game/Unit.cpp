@@ -40,4 +40,19 @@ std::shared_ptr<Unit> Doctor::clone() const
     return std::shared_ptr<Unit>(NULL);
 }
 
+long long Warrior::getPower() const
+{
+    return sword_.getPower() + armor_.getPower();
+}
+
+long long Archer::getPower() const
+{
+    return bow_.getPower() + armor_.getPower();
+}
+
+long long Doctor::getPower() const
+{
+    return heal_.getPower() + armor_.getPower();
+}
+
 Unit::~Unit(){}

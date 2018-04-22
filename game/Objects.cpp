@@ -12,6 +12,11 @@ Health Armor::beat(Health damage)
     return damage;
 }
 
+long long Armor::getPower() const
+{
+    return bal_;
+}
+
 const Health Armor::DEFAULT_BALANCE = 50;
 Armor::Armor(Health balance) : bal_(balance) {}
 
@@ -26,6 +31,11 @@ Health Weapon::getHealth() const
 Coordinate Weapon::getDistance() const
 {
     return dist_;
+}
+
+long long Weapon::getPower() const
+{
+    return dam_ * dist_;
 }
 
 
@@ -51,4 +61,9 @@ Health Healing::getHeal() const
 Coordinate Healing::getDistance() const
 {
     return dist_;
+}
+
+long long Healing::getPower() const
+{
+    return heal_ * dist_;
 }

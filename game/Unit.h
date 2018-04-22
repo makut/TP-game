@@ -10,14 +10,14 @@ class Unit
 {
 protected:
     Unit(Health, const Armor&);
+    Health health_;
+    Armor armor_;
 public:
     explicit Unit(const std::shared_ptr<const Unit>&);
     virtual ~Unit() = 0;
     virtual std::shared_ptr<Unit> clone() const = 0;
+    virtual long long getPower() const = 0;
     static const Health MAX_HEALTH;
-private:
-    Health health_;
-    Armor armor_;
 };
 
 class Warrior : public Unit
@@ -26,6 +26,7 @@ public:
     explicit Warrior(const std::shared_ptr<const Warrior>&);
     virtual ~Warrior() = default;
     virtual std::shared_ptr<Unit> clone() const;
+    virtual long long getPower() const override;
 
     friend WarriorBuilder;
 private:
@@ -40,6 +41,7 @@ public:
     explicit Archer(const std::shared_ptr<const Archer>&);
     virtual ~Archer() = default;
     virtual std::shared_ptr<Unit> clone() const;
+    virtual long long getPower() const override;
 
     friend ArcherBuilder;
 private:
@@ -54,6 +56,7 @@ public:
     explicit Doctor(const std::shared_ptr<const Doctor>&);
     virtual ~Doctor() = default;
     virtual std::shared_ptr<Unit> clone() const;
+    virtual long long getPower() const override;
 
     friend DoctorBuilder;
 private:
