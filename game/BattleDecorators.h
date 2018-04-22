@@ -26,6 +26,7 @@ public:
             loser1(w_.getFirst());
             winner2(w_.getSecond());
         }
+        return ans;
     }
 
     std::shared_ptr<ArmyUnit<W::level1> > getFirst() const
