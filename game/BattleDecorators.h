@@ -43,8 +43,8 @@ public:
         return w_.getSecond();
     }
 
-    static const int level1 = decorated_type::level1;
-    static const int level2 = decorated_type::level2;
+    constexpr static const int level1 = decorated_type::level1;
+    constexpr static const int level2 = decorated_type::level2;
 protected:
     W w_;
 };

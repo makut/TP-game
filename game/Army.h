@@ -188,8 +188,8 @@ public:
     {
         return second_;
     }
-    static const int level1 = LEVEL1;
-    static const int level2 = LEVEL2;
+    constexpr static const int level1 = LEVEL1;
+    constexpr static const int level2 = LEVEL2;
 private:
     std::shared_ptr<ArmyUnit<LEVEL1> > first_;
     std::shared_ptr<ArmyUnit<LEVEL2> > second_;

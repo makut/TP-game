@@ -133,10 +133,8 @@ TEST(Structure, MultipleDecorator)
         second->addUnit(std::shared_ptr<Soldier>(new Soldier(result)));   
     }
     Battle b(first, second);
-    BasicDecorator bd(b);
-    BasicDecorator bd1(bd);
-    BasicDecorator bd2(bd1);
-    Winner res = bd2.executeBattle();
+    auto bd = BasicDecorator(BasicDecorator(BasicDecorator(b)));
+    Winner res = bd.executeBattle();
     EXPECT_EQ(first->getMoney(), 10300);
     EXPECT_EQ(second->getMoney(), 8730);
     EXPECT_EQ(res, FIRST);
