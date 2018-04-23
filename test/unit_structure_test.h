@@ -106,7 +106,38 @@ TEST(Structure, BattleDecorator)
     }
     Battle b(first, second);
     BasicDecorator bd(b);
-    bd.executeBattle();
+    Winner res = bd.executeBattle();
     EXPECT_EQ(first->getMoney(), 10100);
     EXPECT_EQ(second->getMoney(), 8910);
+    EXPECT_EQ(res, FIRST);
+}
+
+TEST(Structure, MultipleDecorator)
+{
+    std::shared_ptr<Company> first(new Company);
+    for (size_t i = 0; i < 10; i++)
+    {
+        ArcherBuilder ab;
+        HumanBuilder hb;
+        std::shared_ptr<AbstractFactory> hf(new HumanFactory(hb.getResult()));
+        std::shared_ptr<Unit> result = hf->getArcher(ab.getResult());
+        first->addUnit(std::shared_ptr<Soldier>(new Soldier(result)));
+    }
+    std::shared_ptr<Company> second(new Company);
+    for (size_t i = 0; i < 9; i++)
+    {
+        ArcherBuilder ab;
+        HumanBuilder hb;
+        std::shared_ptr<AbstractFactory> hf(new HumanFactory(hb.getResult()));
+        std::shared_ptr<Unit> result = hf->getArcher(ab.getResult());
+        second->addUnit(std::shared_ptr<Soldier>(new Soldier(result)));   
+    }
+    Battle b(first, second);
+    BasicDecorator bd(b);
+    BasicDecorator bd1(bd);
+    BasicDecorator bd2(bd1);
+    Winner res = bd2.executeBattle();
+    EXPECT_EQ(first->getMoney(), 10300);
+    EXPECT_EQ(second->getMoney(), 8730);
+    EXPECT_EQ(res, FIRST);
 }
