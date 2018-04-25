@@ -11,7 +11,7 @@ public:
     template<int LEVEL1>
     friend class ArmyUnit;
 
-    ArmyUnit() : power_(0), money_(0), pr_(nullptr) {}
+    ArmyUnit() : power_(0), money_(0), pr_() {}
     ArmyUnit(const ArmyUnit &other):
         consist_(other.consist_), pr_(other.pr_)
     {
@@ -35,7 +35,7 @@ public:
     }
     ~ArmyUnit() = default;
 
-    void setPrev(const std::shared_ptr<ArmyUnit<LEVEL + 1> > &pr)
+    void setPrev(const std::weak_ptr<ArmyUnit<LEVEL + 1> > &pr)
     {
         pr_ = pr;
     }
@@ -67,12 +67,12 @@ public:
     {
         long long old_value = money_;
         increaseChildren_(add);
-        if (pr_ != nullptr)
-            pr_->increaseMoney_(money_ - old_value);
+        if (pr_.lock() != nullptr)
+            pr_.lock()->increaseMoney_(money_ - old_value);
     }
 private:
     std::vector<std::shared_ptr<ArmyUnit<LEVEL - 1> > > consist_;
-    std::shared_ptr<ArmyUnit<LEVEL + 1> > pr_;
+    std::weak_ptr<ArmyUnit<LEVEL + 1> > pr_;
     long long power_, money_;
 
     void increaseChildren_(long long add)
@@ -89,8 +89,8 @@ private:
     void increaseMoney_(long long add)
     {
         money_ = std::max<long long>(0, money_ + add);
-        if (pr_ != nullptr)
-            pr_->increaseMoney_(add);
+        if (pr_.lock() != nullptr)
+            pr_.lock()->increaseMoney_(add);
     }
 };
 
@@ -112,6 +112,8 @@ public:
     explicit ArmyUnit(const std::shared_ptr<Unit> &unit, const std::shared_ptr<ArmyUnit<1> > pr = nullptr):
         unit_(unit), pr_(pr), money_(DEFAULT_MONEY) {}
 
+    ~ArmyUnit() = default;
+
     long long getPower() const
     {
         return unit_->getPower();
@@ -122,7 +124,7 @@ public:
         return std::shared_ptr<ArmyUnit<0> >(new ArmyUnit<0>(unit_->clone()));
     }
 
-    void setPrev(const std::shared_ptr<ArmyUnit<1> > &pr)
+    void setPrev(const std::weak_ptr<ArmyUnit<1> > &pr)
     {
         pr_ = pr;
     }
@@ -131,8 +133,8 @@ public:
     {
         long long old_value = money_;
         increaseChildren_(add);
-        if (pr_ != nullptr)
-            pr_->increaseMoney_(money_ - old_value);
+        if (pr_.lock() != nullptr)
+            pr_.lock()->increaseMoney_(money_ - old_value);
     }
 
     long long getMoney() const
@@ -143,7 +145,7 @@ public:
     static const long long DEFAULT_MONEY = 1000;
 private:
     std::shared_ptr<Unit> unit_;
-    std::shared_ptr<ArmyUnit<1> > pr_;
+    std::weak_ptr<ArmyUnit<1> > pr_;
     long long money_;
 
     void increaseChildren_(long long add)
