@@ -5,6 +5,20 @@
 # include <vector>
 
 template<int LEVEL>
+class ArmyUnit;
+
+class IArmyPrinter
+{
+public:
+    virtual void printSoldier(const ArmyUnit<0>&) = 0;
+    virtual void printCompany(const ArmyUnit<1>&) = 0;
+    virtual void printBattalion(const ArmyUnit<2>&) = 0;
+    virtual void printArmy(const ArmyUnit<3>&) = 0;
+
+    virtual ~IArmyPrinter() = default;
+};
+
+template<int LEVEL>
 class ArmyUnit : public std::enable_shared_from_this<ArmyUnit<LEVEL> >
 {
 public:
@@ -19,8 +33,8 @@ public:
         money_ = 0;
         for (size_t i = 0; i < consist_.size(); i++)
         {
-            power_ += consist_[i].getPower();
-            money_ += consist_[i].getMoney();
+            power_ += consist_[i]->getPower();
+            money_ += consist_[i]->getMoney();
         }
     }
     ArmyUnit(ArmyUnit&& other) : consist_(std::move(other.consist_)), pr_(std::move(other.pr_))
@@ -29,8 +43,8 @@ public:
         money_ = 0;
         for (size_t i = 0; i < consist_.size(); i++)
         {
-            power_ += consist_[i].getPower();
-            money_ += consist_[i].getMoney();
+            power_ += consist_[i]->getPower();
+            money_ += consist_[i]->getMoney();
         }
     }
     ~ArmyUnit() = default;
@@ -70,6 +84,17 @@ public:
         if (pr_.lock() != nullptr)
             pr_.lock()->increaseMoney_(money_ - old_value);
     }
+
+    void output(const std::shared_ptr<IArmyPrinter> &army_printer) const;
+
+    template<int INDENT = 0>
+    void show(const std::shared_ptr<IArmyPrinter> &army_printer) const
+    {
+        std::cout << std::string(INDENT, ' ');
+        output(army_printer);
+        for (std::shared_ptr<const ArmyUnit<LEVEL - 1> > ch : consist_)
+            ch->template show<INDENT + 2>(army_printer);
+    }
 private:
     std::vector<std::shared_ptr<ArmyUnit<LEVEL - 1> > > consist_;
     std::weak_ptr<ArmyUnit<LEVEL + 1> > pr_;
@@ -95,7 +120,7 @@ private:
 };
 
 template<>
-class ArmyUnit<100>
+class ArmyUnit<10>
 {
 public:
     void increaseChildren_(long long add) {}
@@ -140,6 +165,23 @@ public:
     long long getMoney() const
     {
         return money_;
+    }
+
+    std::string getName() const
+    {
+        return unit_->getName();
+    }
+
+    void output(const std::shared_ptr<IArmyPrinter> &army_printer) const
+    {
+        army_printer->printSoldier(*this);
+    }
+
+    template<int INDENT = 0>
+    void show(const std::shared_ptr<IArmyPrinter> &army_printer) const
+    {
+        std::cout << std::string(INDENT, ' ');
+        output(army_printer);
     }
 
     static const long long DEFAULT_MONEY = 1000;

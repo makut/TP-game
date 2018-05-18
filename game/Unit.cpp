@@ -55,4 +55,19 @@ long long Doctor::getPower() const
     return heal_.getPower() + armor_.getPower();
 }
 
+std::string Warrior::getName() const
+{
+    return "Warrior";
+}
+
+std::string Archer::getName() const
+{
+    return "Archer";
+}
+
+std::string Doctor::getName() const
+{
+    return "Doctor";
+}
+
 Unit::~Unit(){}

@@ -1,5 +1,6 @@
 # pragma once
 # include <memory>
+# include <string>
 # include "Objects.h"
 
 class WarriorBuilder;
@@ -17,6 +18,7 @@ public:
     virtual ~Unit() = 0;
     virtual std::shared_ptr<Unit> clone() const = 0;
     virtual long long getPower() const = 0;
+    virtual std::string getName() const = 0;
     static const Health MAX_HEALTH;
 };
 
@@ -27,6 +29,7 @@ public:
     virtual ~Warrior() = default;
     virtual std::shared_ptr<Unit> clone() const;
     virtual long long getPower() const override;
+    virtual std::string getName() const override;
 
     friend WarriorBuilder;
 private:
@@ -42,6 +45,7 @@ public:
     virtual ~Archer() = default;
     virtual std::shared_ptr<Unit> clone() const;
     virtual long long getPower() const override;
+    virtual std::string getName() const override;
 
     friend ArcherBuilder;
 private:
@@ -57,6 +61,7 @@ public:
     virtual ~Doctor() = default;
     virtual std::shared_ptr<Unit> clone() const;
     virtual long long getPower() const override;
+    virtual std::string getName() const override;
 
     friend DoctorBuilder;
 private:

@@ -83,3 +83,33 @@ std::shared_ptr<Unit> HumanDoctor::clone() const
     std::shared_ptr<const Doctor> doc_prototype(std::dynamic_pointer_cast<const Doctor>(shared_this));
     return std::shared_ptr<Unit>(new HumanDoctor(hum_prototype, doc_prototype));
 }
+
+std::string OrcWarrior::getName() const
+{
+    return "Orc Warrior";
+}
+
+std::string OrcArcher::getName() const
+{
+    return "Orc Archer";
+}
+
+std::string OrcDoctor::getName() const
+{
+    return "Orc Doctor";
+}
+
+std::string HumanWarrior::getName() const
+{
+    return "Human Warrior";
+}
+
+std::string HumanArcher::getName() const
+{
+    return "Human Archer";
+}
+
+std::string HumanDoctor::getName() const
+{
+    return "Human Doctor";
+}

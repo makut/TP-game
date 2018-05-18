@@ -2,6 +2,7 @@
 # include "game/Factory.h"
 # include "game/BattleDecorators.h"
 # include "game/Army.h"
+# include "game/CompositeVisitor.h"
 
 TEST(Structure, Company)
 {
