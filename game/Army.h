@@ -10,10 +10,12 @@ class ArmyUnit;
 class IArmyPrinter
 {
 public:
-    virtual void printSoldier(const ArmyUnit<0>&) = 0;
-    virtual void printCompany(const ArmyUnit<1>&) = 0;
-    virtual void printBattalion(const ArmyUnit<2>&) = 0;
-    virtual void printArmy(const ArmyUnit<3>&) = 0;
+    virtual void printSoldier(ArmyUnit<0>*) = 0;
+    virtual void printCompany(ArmyUnit<1>*) = 0;
+    virtual void printBattalion(ArmyUnit<2>*) = 0;
+    virtual void printArmy(ArmyUnit<3>*) = 0;
+    virtual void useIndent(int ind) = 0;
+    virtual void reset() = 0;
 
     virtual ~IArmyPrinter() = default;
 };
@@ -85,14 +87,14 @@ public:
             pr_.lock()->increaseMoney_(money_ - old_value);
     }
 
-    void output(const std::shared_ptr<IArmyPrinter> &army_printer) const;
+    void output(const std::shared_ptr<IArmyPrinter> &army_printer);
 
     template<int INDENT = 0>
-    void show(const std::shared_ptr<IArmyPrinter> &army_printer) const
+    void show(const std::shared_ptr<IArmyPrinter> &army_printer)
     {
-        std::cout << std::string(INDENT, ' ');
+        army_printer->useIndent(INDENT);
         output(army_printer);
-        for (std::shared_ptr<const ArmyUnit<LEVEL - 1> > ch : consist_)
+        for (std::shared_ptr<ArmyUnit<LEVEL - 1> > ch : consist_)
             ch->template show<INDENT + 2>(army_printer);
     }
 private:
@@ -128,7 +130,7 @@ public:
 };
 
 template<>
-class ArmyUnit<0>
+class ArmyUnit<0> : public std::enable_shared_from_this<ArmyUnit<0> >
 {
 public:
     template<int LEVEL>
@@ -172,15 +174,15 @@ public:
         return unit_->getName();
     }
 
-    void output(const std::shared_ptr<IArmyPrinter> &army_printer) const
+    void output(const std::shared_ptr<IArmyPrinter> &army_printer)
     {
-        army_printer->printSoldier(*this);
+        army_printer->printSoldier(this);
     }
 
     template<int INDENT = 0>
-    void show(const std::shared_ptr<IArmyPrinter> &army_printer) const
+    void show(const std::shared_ptr<IArmyPrinter> &army_printer)
     {
-        std::cout << std::string(INDENT, ' ');
+        army_printer->useIndent(INDENT);
         output(army_printer);
     }
 
@@ -212,8 +214,8 @@ class Battle
 public:
     Battle(const Battle&) = default;
 
-    Battle(const std::shared_ptr<ArmyUnit<LEVEL1> > &first,
-           const std::shared_ptr<ArmyUnit<LEVEL2> > &second):
+    Battle(ArmyUnit<LEVEL1> *first,
+           ArmyUnit<LEVEL2> *second):
         first_(first), second_(second) {}
 
     Winner executeBattle() const
@@ -223,18 +225,27 @@ public:
         return (first_->getPower() > second_->getPower() ? FIRST : SECOND);
     }
 
-    std::shared_ptr<ArmyUnit<LEVEL1> > getFirst() const
+    ArmyUnit<LEVEL1>* getFirst() const
     {
         return first_;
     }
 
-    std::shared_ptr<ArmyUnit<LEVEL2> > getSecond() const
+    ArmyUnit<LEVEL2>* getSecond() const
     {
         return second_;
     }
     constexpr static const int level1 = LEVEL1;
     constexpr static const int level2 = LEVEL2;
 private:
-    std::shared_ptr<ArmyUnit<LEVEL1> > first_;
-    std::shared_ptr<ArmyUnit<LEVEL2> > second_;
+    ArmyUnit<LEVEL1> *first_;
+    ArmyUnit<LEVEL2> *second_;
+};
+
+class NullBuffer : public std::streambuf
+{
+public:
+    int overflow(int c)
+    {
+        return c;
+    }
 };

@@ -10,10 +10,10 @@ public:
 
     explicit Decorator(const decorated_type &w) : w_(w) {}
 
-    virtual void winner1(const std::shared_ptr<ArmyUnit<decorated_type::level1> >&) = 0;
-    virtual void winner2(const std::shared_ptr<ArmyUnit<decorated_type::level2> >&) = 0;
-    virtual void loser1(const std::shared_ptr<ArmyUnit<decorated_type::level1> >&) = 0;
-    virtual void loser2(const std::shared_ptr<ArmyUnit<decorated_type::level2> >&) = 0;
+    virtual void winner1(ArmyUnit<decorated_type::level1>*) = 0;
+    virtual void winner2(ArmyUnit<decorated_type::level2>*) = 0;
+    virtual void loser1(ArmyUnit<decorated_type::level1>*) = 0;
+    virtual void loser2(ArmyUnit<decorated_type::level2>*) = 0;
 
     Winner executeBattle()
     {
@@ -33,12 +33,12 @@ public:
         return ans;
     }
 
-    std::shared_ptr<ArmyUnit<decorated_type::level1> > getFirst() const
+    ArmyUnit<decorated_type::level1>* getFirst() const
     {
         return w_.getFirst();
     }
 
-    std::shared_ptr<ArmyUnit<decorated_type::level2> > getSecond() const
+    ArmyUnit<decorated_type::level2>* getSecond() const
     {
         return w_.getSecond();
     }
@@ -59,22 +59,22 @@ public:
 
     explicit BasicDecorator(const decorated_type &w) : Decorator<decorated_type>(w) {}
 
-    virtual void winner1(const std::shared_ptr<ArmyUnit<decorated_type::level1> > &au) override
+    virtual void winner1(ArmyUnit<decorated_type::level1> *au) override
     {
         au->addMoney(10);
     }
 
-    virtual void winner2(const std::shared_ptr<ArmyUnit<decorated_type::level2> > &au) override
+    virtual void winner2(ArmyUnit<decorated_type::level2> *au) override
     {
         au->addMoney(10);
     }
 
-    virtual void loser1(const std::shared_ptr<ArmyUnit<decorated_type::level1> > &au) override
+    virtual void loser1(ArmyUnit<decorated_type::level1> *au) override
     {
         au->addMoney(-10);
     }
 
-    virtual void loser2(const std::shared_ptr<ArmyUnit<decorated_type::level2> > &au) override
+    virtual void loser2(ArmyUnit<decorated_type::level2> *au) override
     {
         au->addMoney(-10);
     }

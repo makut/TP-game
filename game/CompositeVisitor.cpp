@@ -1,21 +1,41 @@
 # include "CompositeVisitor.h"
 
-void ArmyPrinter::printSoldier(const Soldier &unit)
+ArmyPrinter::ArmyPrinter(std::ostream &out) : out_(out), curr_(1) {}
+
+void ArmyPrinter::printSoldier(Soldier *unit)
 {
-    std::cout << "Money: " << unit.getMoney() << ", " << unit.getName() << "\n";
+    ind_sold_[curr_++] = unit;
+    out_ << "Index: " << curr_ - 1 << ", Money: " << unit->getMoney() << ", " << unit->getName() << "\n";
 }
 
-void ArmyPrinter::printCompany(const Company &comp)
+void ArmyPrinter::printCompany(Company *comp)
 {
-    std::cout << "Money: " << comp.getMoney() << ", Company\n";
+    ind_comp_[curr_++] = comp;
+    out_ << "Index: " << curr_ - 1 << ", Money: " << comp->getMoney() << ", Company\n";
 }
 
-void ArmyPrinter::printBattalion(const Battalion &bat)
+void ArmyPrinter::printBattalion(Battalion *bat)
 {
-    std::cout << "Money: " << bat.getMoney() << ", Battalion\n";
+    ind_bat_[curr_++] = bat;
+    out_ << "Index: " << curr_ - 1 << ", Money: " << bat->getMoney() << ", Battalion\n";
 }
 
-void ArmyPrinter::printArmy(const Army &army)
+void ArmyPrinter::printArmy(Army *army)
 {
-    std::cout << "Money: " << army.getMoney() << ", Money\n";
+    ind_army_[curr_++] = army;
+    out_ << "Index: " << curr_ - 1 << ", Money: " << army->getMoney() << ", Army\n";
+}
+
+void ArmyPrinter::useIndent(int ind)
+{
+    out_ << std::string(ind, ' ');
+}
+
+void ArmyPrinter::reset()
+{
+    curr_ = 1;
+    ind_army_.clear();
+    ind_bat_.clear();
+    ind_comp_.clear();
+    ind_sold_.clear();
 }

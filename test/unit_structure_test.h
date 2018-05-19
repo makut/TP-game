@@ -81,7 +81,7 @@ TEST(Structure, BattleWinner)
         std::shared_ptr<Unit> result = hf->getArcher(ab.getResult());
         second->addUnit(std::shared_ptr<Soldier>(new Soldier(result)));   
     }
-    Battle b(first, second);
+    Battle b(first.get(), second.get());
     EXPECT_EQ(b.executeBattle(), FIRST);
 }
 
@@ -105,7 +105,7 @@ TEST(Structure, BattleDecorator)
         std::shared_ptr<Unit> result = hf->getArcher(ab.getResult());
         second->addUnit(std::shared_ptr<Soldier>(new Soldier(result)));   
     }
-    Battle b(first, second);
+    Battle b(first.get(), second.get());
     BasicDecorator bd(b);
     Winner res = bd.executeBattle();
     EXPECT_EQ(first->getMoney(), 10100);
@@ -133,8 +133,9 @@ TEST(Structure, MultipleDecorator)
         std::shared_ptr<Unit> result = hf->getArcher(ab.getResult());
         second->addUnit(std::shared_ptr<Soldier>(new Soldier(result)));   
     }
-    Battle b(first, second);
+    Battle b(first.get(), second.get());
     auto bd = BasicDecorator(BasicDecorator(BasicDecorator(b)));
+    std::shared_ptr<IArmyPrinter> ap(new ArmyPrinter);
     Winner res = bd.executeBattle();
     EXPECT_EQ(first->getMoney(), 10300);
     EXPECT_EQ(second->getMoney(), 8730);
