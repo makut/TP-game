@@ -64,6 +64,14 @@ public:
         money_ += other->getMoney();
     }
 
+    size_t getSubArmiesNum() const
+    {
+        size_t ans = 1;
+        for (auto ch : consist_)
+            ans += ch->getSubArmiesNum();
+        return ans;
+    }
+
     size_t getSize() const
     {
         return consist_.size();
@@ -172,6 +180,11 @@ public:
     std::string getName() const
     {
         return unit_->getName();
+    }
+
+    size_t getSubArmiesNum() const
+    {
+        return 1;
     }
 
     void output(const std::shared_ptr<IArmyPrinter> &army_printer)
