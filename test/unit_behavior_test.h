@@ -72,7 +72,5 @@ TEST(Behavior, BattleExecution)
     }
     std::shared_ptr<IArmyPrinter> hum_ap(new ArmyPrinter());
     std::shared_ptr<IArmyPrinter> orc_ap(new ArmyPrinter());
-    first->show(hum_ap);
-    second->show(orc_ap);
-    ExecuteBattleCommand(first, second, 1, 1).execute();
+    ExecuteBattleCommand(first, second, 3, 1).execute();
 }

@@ -115,10 +115,10 @@ void ExecuteBattleCommand::execute()
         else
             BasicDecorator(Battle(getSold(curr_hum_, ap_hum), getSold(curr_orc_, ap_orc))).executeBattle();
     }
-    ap_hum.reset();
-    // ap_orc.reset();
+    std::shared_ptr<IArmyPrinter> ap_hum_pr(new ArmyPrinter);
+    std::shared_ptr<IArmyPrinter> ap_orc_pr(new ArmyPrinter);
     std::cout << "Human:\n";
-    human_->show(ap_hum);
+    human_->show(ap_hum_pr);
     std::cout << "\n===================\nOrc:\n";
-    orc_->show(ap_orc);
+    orc_->show(ap_orc_pr);
 }
